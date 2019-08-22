@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no"/>
+    <title>课程</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/course.css}" rel="stylesheet"/>
+    <link th:href="@{/css/layer.css}" rel="stylesheet"/>
+</head>
+<body class="container-fluid">
+<header th:replace="~{header::header}"></header>
+
+<main >
+    <div id="class-head">
+        <p class="h2 font-weight-normal font-italic">课程</p>
+        <p class="p-3 font-italic">学就要学好课程!</p>
+    </div>
+    <hr/>
+    <div id="class-wrap">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="list-group" role="tablist">
+                    <a class="list-group-item list-group-item-action " th:href="'#'+${p1Stat.index+1}"
+                       data-toggle="list" th:each="p1:${parentTypes}"
+                       th:classappend="${parentTypes.indexOf(p1)}==0?'active':''"
+                       th:text="${p1.name}"></a>
+
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <div class="tab-content">
+
+                    <div class="tab-pane fade show " role="tabpanel"
+                         th:id="${p2Stat.index+1}"
+                         th:each="p2:${parentTypes}"
+                         th:classappend="${parentTypes.indexOf(p2)}==0?'active':''">
+                        <ul class="class-li">
+                            <li class="nav-link" th:each="child:${p2.childTypes}">
+                                <a href="javascript:void(0);" th:text="${child.name}"
+                                   th:data="${child.tid}" class="type-link"></a></li>
+
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: 50px">
+        <div class="col-4">
+            <div class="input-group">
+                <select class="custom-select" id="degree">
+                    <option selected>Choose...</option>
+                    <option value="1">初级</option>
+                    <option value="2">中级</option>
+                    <option value="3">高级</option>
+                </select>
+                <div class="input-group-append">
+                    <button class="btn btn-outline-primary" type="button" id="degree-btn">筛选</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="input-group">
+                <select class="custom-select" id="sort">
+                    <option selected>Choose...</option>
+                    <option value="add_time">按时间</option>
+                    <option value="favorite_num">按热门</option>
+                </select>
+                <div class="input-group-append">
+                    <button class="btn btn-outline-primary" type="button" id="sort-btn">筛选</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <button class="btn btn-outline-primary" type="button" id="all-btn">全部</button>
+        </div>
+    </div>
+
+    <div id="course-wrap">
+        <table class="table" id="course-table">
+
+        </table>
+    </div>
+
+
+    <div id="page-wrap" style="margin-top: 80px">
+        <nav aria-label="Page">
+            <ul class="pagination" id="page">
+
+            </ul>
+        </nav>
+    </div>
+</main>
+
+<script th:src="@{/js/jquery-3.3.0.js}" type="text/javascript"></script>
+<script th:src="@{/js/bootstrap.bundle.min.js}" type="text/javascript"></script>
+<script th:src="@{/js/bootstrap.min.js}" type="text/javascript"></script>
+<script th:src="@{/js/layer.js}" type="text/javascript"></script>
+<script th:src="@{/js/dialog.js}" type="text/javascript"></script>
+<script th:src="@{/js/course.js}" type="text/javascript"></script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no"/>
+    <title>manager</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+</head>
+<body>
+<header th:replace="~{header::header}"></header>
+
+<main style="margin-top: 56px" class="container-fluid">
+    <div class="row" style="height: 400px;background-color: slategray;color: snow">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <div style="margin-top: 25px">
+                <ul class="text-center font-italic" style="list-style: none">
+                    <li><img th:src="${session.user.avatar}" style="width: 150px;height: 150px"/></li>
+                    <br/>
+                    <li><h2 class="font-weight-bold font-italic" th:text="${session.user.nickname}"></h2></li>
+                    <li><p><span th:text="${session.user.gender}==1?'男':'女'"></span>&nbsp;&nbsp;&nbsp;
+                        <span th:text="${session.user.address}"></span></p></li>
+                    <li style="font-size: 15px"><p><span>粉丝数&nbsp;242</span>&nbsp;&nbsp;&nbsp;&nbsp;<span>学习时长&nbsp;118h</span></p></li>
+                    <li><p class="font-italic font-weight-bold">时间就像海绵里的水，挤一挤总会有的</p></li>
+                    <li style="color: snow"><a class="btn btn-sm btn-outline-success"　th:href="@{/home/data}">个人设置</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+    <hr/>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="list-group" role="tablist">
+                <a class="list-group-item list-group-item-action active" href="#a" data-toggle="list">动态圈</a>
+                <a class="list-group-item list-group-item-action " href="#b" data-toggle="list" id="my-course">我的课程</a>
+                <a class="list-group-item list-group-item-action " href="#c" data-toggle="list">猿问</a>
+                <a class="list-group-item list-group-item-action " href="#d" data-toggle="list">笔记</a>
+                <a class="list-group-item list-group-item-action " href="#e" data-toggle="list">手记</a>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="tab-content">
+                <div class="tab-pane fade show " role="tabpanel" id="a"></div>
+                <div class="tab-pane fade show " role="tabpanel" id="b">
+                    <table class="table table-hover" id="courses">
+
+                    </table>
+                </div>
+                <div class="tab-pane fade show " role="tabpanel" id="c"></div>
+                <div class="tab-pane fade show " role="tabpanel" id="d"></div>
+                <div class="tab-pane fade show " role="tabpanel" id="e"></div>
+            </div>
+        </div>
+    </div>
+</main>
+<script th:src="@{/js/jquery-3.3.0.js}" type="text/javascript"></script>
+<script th:src="@{/js/bootstrap.min.js}" type="text/javascript"></script>
+<script type="text/javascript">
+    $('#my-course').click(function(){
+
+        $.get({
+            url:"/wk/course/showMyCourse",
+            success:function (result) {
+                $('#courses').children().remove();
+                if(result.status=='SUCCESS'){
+                    for(var i=0;i<result.data.length;i++){
+                        var tr='<tr>\n' +
+                            '                           <td><img src="'+result.data[i].course.image+'" style="width: 200px;height: 200px;"/></td>\n' +
+                            '                           <td><p>'+result.data[i].course.name+'</p></td>\n' +
+                            '                           <td><a href="/wk/course/details/'+result.data[i].course.cid+'" class="nav-link"></a></td>\n' +
+                            '                       </tr>';
+
+                        $('#courses').append(tr);
+                    }
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>

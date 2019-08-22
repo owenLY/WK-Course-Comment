@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div th:fragment="common">
+
+    <!-- 按钮组 -->
+    <ul class="nav nav-tabs nav-fill font-weight-bold border-success" >
+        <li class="active nav-item"><a class="nav-link active" href="#home" aria-controls="home" role="tab" data-toggle="tab" id="lesson">课程章节</a></li>
+        <li class="nav-item"><a class="nav-link" href="#profile" data-toggle="tab" id="comment">用户评价</a></li>
+        <li class="nav-item"><a class="nav-link" href="#messages" data-toggle="tab" id="question">问答</a></li>
+        <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab" id="note">同学笔记</a></li>
+    </ul>
+
+    <!-- 内容组 -->
+    <div class="tab-content">
+        <div class="tab-pane active" id="home">
+            <ul class="list-group">
+                <li class="list-group-item-success">
+                    <div class="" th:each="lesson:${course.lessons}">
+                        <p class="h5 font-italic font-weight-light" th:text="${lesson.name}">第1章:认识数据结构与算法</p>
+                        <ul th:each="video:${lesson.videos}">
+                            <li class="h-75 font-italic video-li" style="margin-top: 10px">
+                                <span  th:text="${video.name}"></span>
+                                <a  class="btn btn-sm btn-link " th:href="@{'/course/video/'+${course.cid}+'/'+${video.vid}}" th:if="${course.price eq 0 || buy_state eq 1}">开始学习</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+        <div class="tab-pane" id="profile">
+            <div class="container">
+                <div class="commentAll">
+                    <!--评论区域 begin-->
+                    <div class="reviewArea clearfix">
+                        <textarea class="content comment-input" placeholder="Please enter a comment&hellip;" onkeyup="keyUP(this)"></textarea>
+                        <a href="javascript:;" class="plBtn">评论</a>
+                    </div>
+                    <!--评论区域 end-->
+
+                    <!--回复区域 begin-->
+                    <div class="comment-show">
+
+                    </div>
+                    <!--回复区域 end-->
+                </div>
+
+            </div>
+        </div>
+        <div class="tab-pane" id="messages">3</div>
+        <div class="tab-pane" id="settings">
+            <ul class="list-group" id="note_wrap">
+
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>

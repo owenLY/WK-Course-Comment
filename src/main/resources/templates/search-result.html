@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>搜索结果</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+</head>
+<body>
+<header th:replace="~{header::header}"></header>
+
+<main class="container-fluid card" style="margin-top: 70px;">
+    <p class="card-header text-info" th:text="'搜到'+${courses.size()}+'门课程'"></p>
+    <div class="card-body">
+        <ul class="list-group" id="search-result">
+            <li class="list-group-item" th:each="course:${courses}">
+                <div class="row">
+                    <div class="col-4 ">
+                        <img th:src="${course.image}" class="img-fluid" style="width:200px;height: 150px;"/>
+                    </div>
+                    <div class="col-8">
+                        <p><a th:text="${course.name}" class="h3 nav-link"
+                              th:href="@{'/course/details/'+${course.cid}}"></a>&nbsp;&nbsp;&nbsp;&nbsp;<span th:text="'￥ '+${course.price}" class="text-danger"></span></p>
+                        <p th:text="${course.desc}"></p>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+</main>
+
+<script th:src="@{/js/jquery-3.3.0.js}" type="text/javascript"></script>
+<script th:src="@{/js/bootstrap.bundle.min.js}" type="text/javascript"></script>
+</body>
+</html>

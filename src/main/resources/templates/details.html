@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no"/>
+    <title>详情</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/details.css}" rel="stylesheet"/>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+    <link th:href="@{/css/comment.css}" rel="stylesheet"/>
+    <link th:href="@{/css/layer.css}" rel="stylesheet"/>
+</head>
+<body class="container-fluid">
+<header th:replace="~{header::header}"></header>
+
+<main>
+    <div id="details-intro">
+        <div class="jumbotron">
+            <h1 class="display-4" th:text="${course.name}">Java数据结构与算法&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span th:text="'￥ '+${course.price}" class="text-danger"></span></h1>
+            <p class="lead" th:text="${course.desc}"></p>
+            <hr class="my-4">
+            <p >
+                <a th:href="@{'/home/ta/'+${course.teacher.tid}}"><img th:src="${course.teacher.image}" class="img-fluid rounded-circle" style="width: 100px;height: 100px"/></a>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span th:text="${course.teacher.nickname}" class="h2 font-weight-bold">小罗</span>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span th:text="${course.teacher.work_position}"></span>
+            </p>
+            <br/>
+            <p class="lead">
+                <a class="btn btn-primary btn-lg" href="#" role="button" th:if="${course.price eq 0 || buy_state eq 1}" th:href="@{'/course/study/'+${course.cid}}">加入学习</a>
+                <a class="btn btn-primary btn-lg" href="#" role="button" th:if="${course.price gt 0 && buy_state eq 0}" id="add2car">加入购物车</a>
+            </p>
+        </div>
+    </div>
+
+    <input type="hidden" th:data="${course.cid}" id="course_cid"/>
+    <input type="hidden" th:data="${session.user.uid}" th:unless="${session.user==null}" id="user_uid"/>
+    <input type="hidden" th:data="${session.user.nickname}" th:unless="${session.user==null}" id="user_nickname"/>
+    <input type="hidden" th:data="${session.user.avatar}" th:unless="${session.user==null}" id="user_avatar"/>
+
+    <div class="container-fluid row">
+        <div class="col-md-9">
+          <div th:replace="~{common::common}"></div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header">
+                    <h4>相关课程推荐</h4>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        <li class="list-group-item" style="margin-bottom: 15px;"><p><img src="#"/>&nbsp;&nbsp;<span>java学习</span></p><p><span>初级</span>&nbsp;&nbsp;<span>￥29.9</span></p></li>
+                        <li class="list-group-item" style="margin-bottom: 15px;"><p><img src="#"/>&nbsp;&nbsp;<span>java学习</span></p><p><span>初级</span>&nbsp;&nbsp;<span>￥29.9</span></p></li>
+                        <li class="list-group-item" style="margin-bottom: 15px;"><p><img src="#"/>&nbsp;&nbsp;<span>java学习</span></p><p><span>初级</span>&nbsp;&nbsp;<span>￥29.9</span></p></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+<script th:src="@{/js/jquery-3.3.0.js}" type="text/javascript"></script>
+<script th:src="@{/js/bootstrap.min.js}" type="text/javascript"></script>
+<script type="text/javascript" th:src="@{/js/jquery-1.12.0.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery.flexText.js}"></script>
+<script type="text/javascript" th:src="@{/js/layer.js}"></script>
+<script type="text/javascript" th:src="@{/js/dialog.js}"></script>
+<script type='text/javascript' th:src="@{/js/details.js}"></script>
+</body>
+</html>

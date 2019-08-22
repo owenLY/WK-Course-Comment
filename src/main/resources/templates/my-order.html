@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+</head>
+<body>
+<header th:replace="~{header::header}"></header>
+<main class="container-fluid" style="margin-top: 70px">
+    <div class="card">
+        <div class="card-header"></div>
+        <div class="card-body">
+            <ul class="nav nav-tabs nav-fill nav-justified font-weight-bold border-success">
+                <li class="nav-item active"><a class="nav-link active" href="#a" data-toggle="tab">全部</a></li>
+                <li class="nav-item "><a class="nav-link" href="#b" data-toggle="tab" id="no-pay">未支付</a></li>
+                <li class="nav-item "><a class="nav-link" href="#c" data-toggle="tab" id="payed">已完成</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="a">
+
+                    <!--
+                    <div class="card">
+                        <p class="card-header">订单编号:<span class="text-info"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-justify">2018-9-12</span></p>
+                        <div class="card-body">
+                            <table class="table table-hover text-center">
+                                <tr >
+                                    <td ><img src="https://szimg.mukewang.com/5d1032ab08719e0906000338-160-90.jpg" class="img-fluid"/></td>
+                                    <td ><p>java开发</p></td>
+                                    <td ><p>￥125</p></td>
+                                </tr>
+                                <tr >
+                                    <td ><img src="https://szimg.mukewang.com/5d1032ab08719e0906000338-160-90.jpg" class="img-fluid"/></td>
+                                    <td ><p>java开发</p></td>
+                                    <td ><p>￥125</p></td>
+
+                                </tr>
+                            </table>
+                        </div>
+                        <p class="card-footer text-right">总金额:<span >￥123</span></p>
+                    </div>
+
+                    -->
+                </div>
+
+
+                <div class="tab-pane " id="b"></div>
+                <div class="tab-pane " id="c"></div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script th:src="@{/js/jquery-3.3.0.js}" type="text/javascript"></script>
+<script th:src="@{/js/bootstrap.min.js}" type="text/javascript"></script>
+
+<script type="text/javascript">
+    function showOrder(orders,id){
+        $('#'+id).children().remove();
+        for(var i=0;i<orders.length;i++){
+            var order=orders[i];
+            var items=order.items;
+
+            var card='<div class="card">\n' +
+                '                        <p class="card-header">订单编号:<span class="text-info">'+order.oid+'</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-justify">'+order.create_time+'</span></p>\n' +
+                '                        <div class="card-body">\n' +
+                '                            <table class="table table-hover text-center" id="'+id+'-table-'+i+'">\n' +
+                '                            </table>\n' +
+                '                        </div>\n' +
+                '                        <p class="card-footer text-right">总金额:<span class="text-danger">￥ '+order.total_money+'</span></p>\n' +
+                '                    </div>';
+
+            $('#'+id).append(card);
+
+            for(var j=0;j<items.length;j++){
+                var item=items[j];
+
+                var tr='<tr >\n' +
+                    '                                    <td ><img src="'+item.course.image+'" class="img-fluid" style="width: 200px;height: 120px"/></td>\n' +
+                    '                                    <td ><p>'+item.course.name+'</p></td>\n' +
+                    '                                    <td ><p class="text-danger">￥ '+item.course.price+'</p></td>\n' +
+                    '                                </tr>';
+
+                $('#'+id+'-table-'+i).append(tr);
+            }
+
+
+        }
+    }
+
+    $(function(){
+        $.get({
+            url:'/wk/queryOrder/0',
+            success:function (result) {
+                if(result.status=='SUCCESS'){
+                    showOrder(result.data,'a');
+                }
+            }
+        });
+
+        $('#no-pay').click(function(){
+            $.get({
+                url:'/wk/queryOrder/-1',
+                success:function (result) {
+                    if(result.status=='SUCCESS'){
+                        showOrder(result.data,'b');
+                    }
+                }
+            });
+        });
+
+        $('#payed').click(function(){
+            $.get({
+                url:'/wk/queryOrder/1',
+                success:function (result) {
+                    if(result.status=='SUCCESS'){
+                        showOrder(result.data,'c');
+                    }
+                }
+            });
+        });
+    })
+</script>
+</body>
+</html>

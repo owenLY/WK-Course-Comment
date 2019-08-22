@@ -1,0 +1,43 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+main{
+    margin-top: 70px;
+
+}
+#class-wrap{
+    background-color: silver;
+}
+#class-head>p{
+    display: inline;
+}
+.class-li>li{
+    float: left;
+}
+#course-wrap{
+    margin-top: 30px;
+    text-align:center;
+}
+#page-wrap{
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin-top: 40px;
+    background-color: #92b8b1;
+}
+.card {
+    margin: 10px;
+    padding: 10px;
+    background: snow;
+    height: 234px;
+}
+.card img {
+    height: 125px;
+}
+.forum{
+    margin-top: 20px;
+}
+.card-body a{
+    text-underline: none;
+}
